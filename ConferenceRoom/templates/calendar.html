@@ -1,0 +1,289 @@
+{% extends "home.html" %}
+{% block title %} Calendar {% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .modal-content {
+            color: black;
+            background-color: white;
+            /* Default background color for light mode */
+        }
+
+        /* Dark mode styles */
+        @media (prefers-color-scheme: dark) {
+            .dark-mode .modal-content {
+                color: white;
+                background-color: rgb(46, 49, 52);
+                /* Dark background color */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- <div class="container mt-3">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+    Open modal
+  </button>
+</div> -->
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal" data-modal-id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Book a Conference Room</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+    
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id="eventForm" method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <!-- chair_count -->
+                        <div>
+                            <label for="myRange">Seat count</label>
+                            <input type="range" class="form-range" min="1" id="myRange1" name="chair_count">
+                            <span id="values1"></span>
+                        </div>
+                        <!-- AC required field (conditionally displayed) -->
+                        <div class="form-check has__ac">
+                            <input type="checkbox" class="form-check-input" id="ac_required" name="ac_required"
+                                style="border: 1px solid #ced4da;">
+                            <label class="form-check-label" for="ac_required">AC Required</label>
+                        </div>
+                        <!-- Projector required field (conditionally displayed) -->
+                        <div class="form-check has__projector">
+                            <input type="checkbox" class="form-check-input" id="projector_required"
+                                name="projector_required" style="border: 1px solid #ced4da;">
+                            <label class="form-check-label" for="projector_required">Projector Required</label>
+                        </div>
+    
+                        {% if is_staff %}
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="overlap" name="overlap"
+                                style="border: 1px solid #ced4da;">
+                            <label class="form-check-label" for="overlap">Allow Overlap</label>
+                        </div>
+                        {% endif %}
+    
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                            <button type="submit" class="btn btn-primary">Book Event</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var slider1 = document.getElementById("myRange1");  
+        var output1 = document.getElementById("values1");
+        output1.innerHTML = slider1.value;
+        slider1.oninput = function () {
+            output1.innerHTML = this.value;
+        }
+    </script>
+
+    <!-- Edit modal -->
+    <!-- <div class="container mt-3">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateEventModal">
+    Edit modal
+  </button>
+</div> -->
+
+    <!-- The Modal -->
+    <div class="modal" id="updateEventModal" data-modal-id="updateEventModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Event</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+    
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id="updateEventForm" method="post">
+                        <input type="hidden" id="hiddenid" name="id" value="">
+                        {% csrf_token %}
+                        <!-- Name field -->
+                        <div class="form-group">
+                            <label for="name">Event Name</label>
+                            {{ form.name }}
+                        </div>
+    
+                        <!-- Start Time field -->
+                        <div class="form-group">
+                            <label for="start_time">Start Time</label>
+                            {{ form.start_time }}
+                        </div>
+    
+                        <!-- End Time field -->
+                        <div class="form-group">
+                            <label for="end_time">End Time</label>
+                            {{ form.end_time }}
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="conference_rooms">Conference Room</label>
+                            <select class="form-control" id="conference_rooms" name="conference_room">
+                                <option value="">Select a Conference Room</option>
+                                {% for room in conference_rooms %}
+                                <option value="{{ room.id }}">{{ room.room_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- chair_count -->
+                        <div class="form-group">
+                            <label for="myRange">Seat count</label>
+                            <input type="range" class="form-range" min="1" id="myRange2" name="chair_count">
+                            <span id="values2"></span>
+                        </div>
+                        <!-- AC required field (conditionally displayed) -->
+                        <div class="form-check has__ac">
+                            <input type="checkbox" class="form-check-input" id="ac_required aaa" name="ac_required"
+                                style="border: 1px solid #ced4da;">
+                            <label class="form-check-label" for="ac_required">AC Required</label>
+                        </div>
+    
+                        <!-- Projector required field (conditionally displayed) -->
+                        <div class="form-check has__projector">
+                            <input type="checkbox" class="form-check-input" id="projector_required ppp"
+                                name="projector_required" style="border: 1px solid #ced4da;">
+                            <label class="form-check-label" for="projector_required">Projector Required</label>
+                        </div><br>
+                        
+    
+                        <button type="button" class="btn btn-danger" id="deleteEvent">Delete Event</button>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                            <button type="submit" class="btn btn-primary" id="updateEvent">Update Event</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var slider2 = document.getElementById("myRange2");  
+        var output2 = document.getElementById("values2");
+        output2.innerHTML = slider2.value;
+        slider2.oninput = function () {
+            output2.innerHTML = this.value;
+        }
+    </script>
+
+    <!-- close edit modal -->
+
+    <!-- dropdown -->
+    <div class="container p-3"
+        style="border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;">
+        <div class="row">
+            <div class="col-md-6 mx-auto text-center">
+                <h2>Choose the Conference Room</h2>
+                <form id="conferenceRoomForm">
+                    <div class="form-group position-relative">
+                        <select class="form-control mx-auto text-center" id="conferenceRoomSelect" name="room_id"
+                            style="border-radius:20px; padding-right: 40px; width: 300px;" onchange="updateModalRoom(this.value)">
+                            <option value="">All Conference Rooms</option>
+                            {% for room in conference_rooms %}
+                            <option value="{{ room.id }}">{{ room.room_name }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="position-absolute top-50 end-0 translate-middle-y " style="margin-right: 28%">
+                            <i class="fa fa-caret-down" style="font-size: 18px;"></i>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateModalRoom(selectedRoomId) {
+                // Get the modal form's drop-down element
+                const modalRoomSelect = document.getElementById('conference_rooms');
+                const modalRoomSelect1 = document.getElementById('conference_room');
+                // Loop through the options and select the one that matches the selectedRoomId
+                for (let i = 0; i < modalRoomSelect.options.length; i++) {
+                    if (modalRoomSelect.options[i].value === selectedRoomId) {
+                        modalRoomSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+
+                for (let i = 0; i < modalRoomSelect1.options.length; i++) {
+                if (modalRoomSelect1.options[i].value === selectedRoomId) {
+                    modalRoomSelect1.selectedIndex = i;
+                    break;
+                }
+            }
+            }
+    </script>
+    <script>
+        $('#conferenceRoomSelect').change(function () {
+                var selectedRoomId = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "check_room_features" %}?room_id=' + selectedRoomId,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.has_ac) {
+                            $(".has__ac").show();
+
+                        } else {
+                            $(".has__ac").hide();
+                        }
+
+                        if (data.has_projector) {
+                            $(".has__projector").show();
+                        } else {
+                            $(".has__projector").hide();
+                        }
+                        var maxChairs = data.number_of_chairs;
+                        $('#myRange1').attr('max', maxChairs);
+                        $('#myRange2').attr('max', maxChairs);
+                    },
+                    error: function () {
+                        alert('AJAX Error, Choose the anyone of the hall');
+                    }
+                });
+            });
+    </script>
+    <!-- end dropdown -->
+
+
+    <div class="p-5">
+        <div class="col-md-12">
+            <div id="calendar"></div>
+        </div>
+    </div>
+    {% endblock content %}
+
+
+    <script>
+        // Check if the user's system is in dark mode
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            // Add the 'dark-mode' class to the body element
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+
+
+</body>
+
+</html>

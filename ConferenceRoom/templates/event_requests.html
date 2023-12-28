@@ -1,0 +1,29 @@
+{% extends 'home.html' %}
+{% block title %} Requests {% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="mt-5">Event Requests</h1>
+<hr>
+    <ul class="list-group mt-4">
+        {% for request in requests %}
+        <li class="list-group-item">
+            <div class="d-flex justify-content-between align-items-center" style="border-radius: 15px;">
+                <span>
+                    <b>{{ request.requester.username }}</b> wants to overlap with <b>{{ request.booking.name }}</b>
+                </span>
+                <form method="post" action="{% url 'handle_event_request' request.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success " name="action" value="approve">
+                        Approve
+                    </button>
+                    <button type="submit" class="btn btn-danger " name="action" value="reject">
+                        Reject
+                    </button>
+                </form>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

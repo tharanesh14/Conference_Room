@@ -1,0 +1,94 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="shortcut icon" type="image/png" href="{% static '/images/logos/favicon.png'%}" />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://unicons.iconscout.com/release/v2.1.9/css/unicons.css'>
+  <link rel="stylesheet" href="{% static '/css/login.css'%}" />
+</head>
+
+<body>
+  <!-- partial:index.partial.html -->
+  <div class="section">
+    <div class="container">
+      <div class="row full-height justify-content-center">
+        <div class="col-12 text-center align-self-center py-5">
+          <div class="section pb-5 pt-5 pt-sm-2 text-center">
+            <h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
+            <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
+            <label for="reg-log"></label>
+            <div class="card-3d-wrap mx-auto">
+              <div class="card-3d-wrapper">
+                <div class="card-front">
+                  <div class="center-wrap">
+                    <div class="section text-center">
+                      <h4 class="mb-4 pb-3">Log In</h4>
+                      <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                          <input type="text" class="form-style" id="username" name="username" placeholder="Username" autocomplete="off">
+                          <i class="input-icon uil uil-user"></i>
+                        </div>
+                        <div class="form-group mt-2">
+                          <input type="password" class="form-style" name="password" id="password" placeholder="Password" autocomplete="off">
+                          <i class="input-icon uil uil-lock-alt"></i>
+                        </div>
+                        <input type="submit" value="Sign In" class="btn mt-4 mr-1" id="sub">
+                        <input type="reset" value="Reset" class="btn mt-4">
+                        <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
+                      </form>
+                    </div>
+                    {% for messgae in messages %}
+                    <p id="messages">{{message}}</p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="card-back">
+                  <div class="center-wrap">
+                    <div class="section text-center">
+                      <h4>Sign Up</h4>
+                      <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                          {{form.username}}
+                          <i class="input-icon uil uil-user"></i>
+                        </div>
+                        <div class="form-group mt-1">
+                          {{form.email}}
+                          <i class="input-icon uil uil-at"></i>
+                        </div>
+                        <div class="form-group mt-1">
+                          {{form.user_group}}
+                          <i class="input-icon uil uil-arrow-down"></i>
+                        </div>
+                        <div class="form-group mt-1">
+                          {{form.password1}}
+                          <i class="input-icon uil uil-lock-alt"></i>
+                        </div>
+                        <div class="form-group mt-1">
+                          {{form.password2}}
+                          <i class="input-icon uil uil-lock-alt"></i>
+                        </div>
+                        <input type="submit" value="Sign Up" class="btn mt-2 mr-1" id="sub">
+                        <input type="reset" value="Reset" class="btn mt-2">
+                      </form>
+                    </div>
+                    {{ form.errors }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="{% static '/libs/jquery/dist/jquery.min.js'%}"></script>
+  <script src="{% static '/libs/bootstrap/dist/js/bootstrap.bundle.min.js'%}"></script>
+</body>
+
+</html>

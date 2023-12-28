@@ -1,0 +1,161 @@
+.fc-event {
+    background-color: #0d6efd;
+    border-radius: 5px;
+}
+
+body {
+    transition: background-color 0.5s, color 0.5s;
+    background-color: whitesmoke;
+    /* Light mode background color */
+    color: black;
+    /* Light mode text color */
+}
+
+.dark-mode {
+    background-color: rgb(46, 49, 52);
+    /* Dark mode background color */
+    color: whitesmoke;
+    /* Dark mode text color */
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+}
+
+.slider:before {
+    content: "";
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    transition: 0.4s;
+    left: 4px;
+    bottom: 4px;
+    background-color: aliceblue;
+}
+
+input:checked+.slider {
+    background-color: #01090f;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #133158;
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.app-header.light-mode {
+    background-color: #ffffff;
+    /* Light mode background color for the app header */
+    color: #000000;
+    /* Light mode text color for the app header */
+}
+
+/* Dark mode styles for the entire app header */
+.app-header.dark-mode {
+    background-color: #19161c;
+    /* Dark mode background color for the app header */
+    color: #ffffff;
+    /* Dark mode text color for the app header */
+}
+
+.navbar-light {
+    background-color: #ffffff;
+    /* Light mode background color for navbar */
+    color: #000000;
+    /* Light mode text color for navbar */
+}
+
+.left-sidebar {
+    background-color: #f8f9fa;
+    /* Light mode background color for sidebar */
+    color: #000000;
+    /* Light mode text color for sidebar */
+}
+
+/* Dark mode styles for the navbar and sidebar */
+.dark-mode .navbar-light {
+    background-color: #19161c;
+    /* Dark mode background color for navbar */
+    color: #ffffff;
+    /* Dark mode text color for navbar */
+}
+
+.dark-mode .left-sidebar {
+    background-color: #19161c;
+    /* Dark mode background color for sidebar */
+    color: #ffffff;
+    /* Dark mode text color for sidebar */
+}
+
+.dark-mode .hide-menu {
+    color: #ffffff;
+}
+
+.dark-mode .ti-bell-ringing {
+    color: white;
+}
+
+
+.table.light-mode {
+    background-color: #1d1d1d;
+    color: #fff;
+}
+
+.table.light-mode thead th {
+    color: #fff;
+    background-color: #333;
+}
+
+.table.light-mode tbody tr:nth-child(odd) {
+    background-color: #2c2c2c;
+}
+
+.table.light-mode tbody tr {
+    border-bottom: 1px solid #333;
+}
+
+/* Dark mode styles for the data table */
+.table.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+.table.dark-mode thead th {
+    color: #fff;
+    background-color: #1d1d1d;
+}
+
+.table.dark-mode tbody tr:nth-child(odd) {
+    background-color: #2c2c2c;
+}
+

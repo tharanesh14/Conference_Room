@@ -1,0 +1,63 @@
+{% extends "home.html" %}
+{% block title %} Event Details {% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="container">
+
+        <h1>Booking Details</h1>
+        <hr>
+    </div>
+    <div class="row y-5">
+        <div class="col-6 ">
+            <div class="container p-5" style="border-radius: 15px; box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;">
+
+                <div class="container mt-4">
+                    <div class="post-details">
+                        <h5>Title: {{ event.name }}</h5>
+                        <p>Username: {{ event.user }}</p>
+                        <p>Start Time: {{ event.start_time|date:"F j, Y g:i a" }}</p>
+                        <p>End Time: {{ event.end_time|date:"F j, Y g:i a" }}</p>
+                        <p>AC Required: {{ event.ac_required }}</p>
+                        <p>Projector Required: {{ event.projector_required }}</p>
+                        <p>Booked Chair Count: {{ booked_chairs }}</p>
+                
+                        <div class="room-chairs y-3">
+                            {% for chair_number in "x"|rjust:room_chair_count %}
+                            {% if forloop.counter0 < remaining_chair_count %} <!-- Display an available (remaining) chair in red -->
+                                <i class="fa-solid fa-couch" style="color: #93ff75;"></i>
+                                {% else %}
+                                <!-- Display a booked chair in green -->
+                                <i class="fa-solid fa-couch" style="color: red;"></i>
+                                {% endif %}
+                
+                                <!-- Add a line break after every 5 chairs -->
+                                {% if forloop.counter|divisibleby:5 and not forloop.last %}
+                                <br>
+                                {% endif %}
+                                {% endfor %}
+                        </div>
+
+                        <br>
+                
+                        <button class="btn btn-primary y-3">
+                            <a href="{% url 'staff_page' %}" style="color: white; text-decoration: none;">Go Back</a>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-6 y-3">
+            <div id="result"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

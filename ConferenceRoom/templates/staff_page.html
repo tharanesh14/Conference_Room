@@ -1,0 +1,47 @@
+{% extends "home.html" %}
+{% block title %} All Meetings {% endblock %}
+{% block content %}
+
+
+<div class="container mt-4">
+    <div class="container mt-4">
+        <h1 style="text-transform: uppercase;" class="text-center"><span> All Meeting details </h1>
+            <hr>
+    </div>
+    <br><br>
+
+
+    <div class="table-responsive p-3">
+        <table id="MeetingTable" class="table table-striped {% if dark_mode %}dark-mode{% else %}light-mode{% endif %}">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>User</th>
+                    <th>Room Id</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <td>{{ event.name }}</td>
+                    <td>{{ event.user }}</td>
+                    <td>{{ event.conference_room }}</td>
+                    <td>{{ event.start_time|date:"D, d M Y H:i" }}</td>
+                    <td>{{ event.end_time|date:"D, d M Y H:i" }}</td>
+                    <td><button class="btn btn-primary btn-sm" style=""><a href="{% url 'event_details' event.id %}"
+                                style="color: white; text-decoration: none;">View</a></button></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">No events available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
