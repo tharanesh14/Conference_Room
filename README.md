@@ -25,3 +25,18 @@ The Conference Room Booking System is a sophisticated solution designed to simpl
 
 - **Comprehensive Booking Details** : Staff users have access to detailed booking information, including event names, organizers, time slots, and room specifications.
 - **Booking History** : Track past bookings with a detailed history feature, facilitating analysis of room utilization trends and informed planning for future events.
+
+<br>
+<hr>
+<br>
+
+# Sample UI:
+
+## Login Page:
+  ![Login Page](https://github.com/tharanesh14/conference_room/assets/110604918/81dc4a48-bc28-4f01-87cf-d11fef98cfb3)
+
+## Booking Page:
+  ![Booking Page](https://github.com/tharanesh14/conference_room/assets/110604918/2fab1ed9-14f1-448e-9ccc-eb589c5cfcf6)
+
+<br>
+<hr>
